@@ -58,7 +58,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 echo $GREEN"Plugin zsh-syntax-highlighting installed"$RESTORE
 sleep 1
 git clone https://github.com/MichaelAquilina/zsh-you-should-use.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/you-should-use
-echo $GREEN"Plugin you-should-use installed"$RESTORE$RESTORE
+echo $GREEN"Plugin you-should-use installed"$RESTORE
 sleep 1
 
 echo $GREEN"Changing your default shell to zsh"$RESTORE
