@@ -1,4 +1,4 @@
-# zsh, oh myzsh and powerlevel10k install script
+# zsh, oh my zsh and powerlevel10k install script
 
 ## How to install
 
