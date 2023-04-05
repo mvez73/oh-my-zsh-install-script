@@ -42,7 +42,7 @@ sleep 2
 
 echo $GREEN"Modifying .zshrc to use powerlevel10k and add new plugins"$RESTORE
 sed -i 's+ZSH_THEME="robbyrussell"+ZSH_THEME="powerlevel10k/powerlevel10k"+' .zshrc
-sed -i 's+plugins=(git)+plugins=(git zsh-autosuggestions zsh-syntax-highlighting you-should-use)"+' .zshrc
+sed -i 's+plugins=(git)+plugins=(git zsh-autosuggestions zsh-syntax-highlighting you-should-use)+' .zshrc
 sleep 2
 
 echo $GREEN"Continuing with theme and plugins"$RESTORE
