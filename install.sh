@@ -32,22 +32,21 @@ then
 fi
 
 echo $GREEN"Installing zsh"$RESTORE
-#sudo apt install zsh -y
+sudo apt install zsh -y
 echo $GREEN"zsh is now installed"$RESTORE
 sleep 2
 
 echo $GREEN"Installing oh-my-zsh"$RESTORE
-#sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 sleep 2
 
 echo $GREEN"Installing powerlevel10k theme"$RESTORE
-#git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 echo $GREEN"Theme powerlevel10k installed"$RESTORE
 sleep 2
 
 echo $GREEN"Modifying .zshrc to use powerlevel10k"$RESTORE
 sed -i 's+ZSH_THEME="robbyrussell"+ZSH_THEME="powerlevel10k/powerlevel10k"+' .zshrc
-#sed -i 's+plugins=(git)+plugins=(git zsh-autosuggestions zsh-syntax-highlighting you-should-use)+' .zshrc
 sleep 2
 
 echo $GREEN"Continuing with plugins"$RESTORE
@@ -163,35 +162,33 @@ prompt_for_multiselect SELECTED "$OPTIONS_STRING"
 
 for i in "${!SELECTED[@]}"; do
 	if [ "${SELECTED[$i]}" == "true" ]; then
-        #sed -i "s+plugins=(git+plugins=(git ${OPTIONS_LABELS[$i]}+" .testrc
 		CHECKED+=("${OPTIONS_VALUES[$i]}")
 	fi
 done
 #echo "${CHECKED[@]}"
 
 if [[ ${CHECKED[@]} =~ "1" ]]; then
-    #git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     sed -i "s+plugins=(git+plugins=(git zsh-autosuggestions+" .zshrc
     echo $GREEN"Plugin zsh-autosuggestions installed"$RESTORE
     sleep 1
 fi
 
 if [[ ${CHECKED[@]} =~ "2" ]]; then
-    #git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     sed -i "s+plugins=(git+plugins=(git zsh-syntax-highlighting+" .zshrc
     echo $GREEN"Plugin zsh-syntax-highlighting installed"$RESTORE
     sleep 1
 fi
 
 if [[ ${CHECKED[@]} =~ "3" ]]; then
-    #git clone https://github.com/MichaelAquilina/zsh-you-should-use.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/you-should-use
+    git clone https://github.com/MichaelAquilina/zsh-you-should-use.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/you-should-use
     sed -i "s+plugins=(git+plugins=(git you-should-use+" .zshrc
     echo $GREEN"Plugin you-should-use installed"$RESTORE
     sleep 1
 fi
 
 if [[ ${CHECKED[@]} =~ "4" ]]; then
-    #git clone https://github.com/MichaelAquilina/zsh-you-should-use.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/you-should-use
     sed -i "s+plugins=(git+plugins=(git copyfile+" .zshrc
     echo $GREEN"Plugin copyfile activated"$RESTORE
     sleep 1
