@@ -1,5 +1,7 @@
 #/bin/bash
+
 # from SO: https://stackoverflow.com/a/54261882/317605 (by https://stackoverflow.com/users/8207842/dols3m)
+
 # Color variables
 RED=$(echo -en '\033[00;31m')
 GREEN=$(echo -en '\033[00;32m')
@@ -20,14 +22,40 @@ WHITE=$(echo -en '\033[01;37m')
 # Clear the color after that
 RESTORE=$(echo -en '\033[0m')
 
+packageManager=""
+if [ -x "$(command -v apk)" ];
+then
+    packageManager="apk install -y "
+elif [ -x "$(command -v apt)" ];
+then
+    packageManager="apt install -y "
+elif [ -x "$(command -v apt-get)" ];
+then
+    packageManager="apt-get install -y "
+elif [ -x "$(command -v dnf)" ];
+then
+    packageManager="dnf install -y "
+elif [ -x "$(command -v yum)" ];
+then
+    packageManager="yum install -y "
+elif [ -x "$(command -v pacman)" ];
+then
+    packageManager="pacman -S install --noconfirm "
+elif [ -x "$(command -v zypper)" ];
+then
+    packageManager="zypper intall -y "
+else
+    echo "Package manager not found. Aborting..."; exit 1 ;
+fi
+
 # Check if git is installed
 if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ];
-then
-    read -p "Do you want to proceed? $GREEN(y)Yes$RESTORE/$RED(n)No$RESTORE " yn;
+  then
+    read -p "You need git installed to run this script. Do you want to install it? $GREEN(y)Yes$RESTORE/$RED(n)No$RESTORE " yn;
     case $yn in
-    [yY][eE][sS]|[yY]) echo $GREEN"Installing git"$RESTORE; sleep 2; sudo apt install -y git;;
+    [yY][eE][sS]|[yY]) echo $GREEN"Installing git"$RESTORE; sleep 2; sudo $packageManager git;;
     [nN][oO]|[nN]) echo $RED"Aborting..."$RESTORE; exit 1 ;;
-  *) exit ;;
+    *) exit ;;
     esac
 fi
 
@@ -151,8 +179,8 @@ function prompt_for_multiselect {
 
 # Usage Example
 
-OPTIONS_VALUES=("1" "2" "3" "4")
-OPTIONS_LABELS=("zsh-autosuggestions" "zsh-syntax-highlighting" "you-should-use" "copyfile")
+OPTIONS_VALUES=("1" "2" "3" "4" "5")
+OPTIONS_LABELS=("zsh-autosuggestions" "zsh-syntax-highlighting" "you-should-use" "copyfile" "sudo")
 
 for i in "${!OPTIONS_VALUES[@]}"; do
 	OPTIONS_STRING+="${OPTIONS_VALUES[$i]} (${OPTIONS_LABELS[$i]});"
@@ -165,7 +193,6 @@ for i in "${!SELECTED[@]}"; do
 		CHECKED+=("${OPTIONS_VALUES[$i]}")
 	fi
 done
-#echo "${CHECKED[@]}"
 
 if [[ ${CHECKED[@]} =~ "1" ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -193,6 +220,21 @@ if [[ ${CHECKED[@]} =~ "4" ]]; then
     echo $GREEN"Plugin copyfile activated"$RESTORE
     sleep 1
 fi
+
+if [[ ${CHECKED[@]} =~ "5" ]]; then
+    sed -i "s+plugins=(git+plugins=(git sudo+" .zshrc
+    echo $GREEN"Plugin sudo activated"$RESTORE
+    sleep 1
+fi
+
+if [[ $packageManager =~ "apt" ]]; then
+    read -p "Do you wish to install Fastfetch? $GREEN(y)Yes$RESTORE/$RED(n)No$RESTORE " yn;
+    case $yn in
+    [yY][eE][sS]|[yY]) wget -O /tmp/fastfetch-linux-amd64.deb https://github.com/fastfetch-cli/fastfetch/releases/latest/download/fastfetch-linux-amd64.deb; sudo $packageManager /tmp/fastfetch-linux-amd64.deb; rm /tmp/fastfetch-linux-amd64.deb; sed -i "1i fastfetch" .zshrc;;
+    [nN][oO]|[nN]) echo $RED"Aborting..."$RESTORE;;
+    *) exit ;;
+    esac
+fi;
 
 echo $GREEN"Changing your default shell to zsh"$RESTORE
 sudo chsh -s $(which zsh) $(whoami)
