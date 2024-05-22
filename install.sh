@@ -1,6 +1,6 @@
-#/bin/bash
+#/usr/bin/env bash
 
-# from SO: https://stackoverflow.com/a/54261882/317605 (by https://stackoverflow.com/users/8207842/dols3m)
+# Selection menu is from this githubSO: https://gist.github.com/sergiofbsilva/099172ea597657b0d0008dc367946953
 
 # Color variables
 RED=$(echo -en '\033[00;31m')
