@@ -50,17 +50,17 @@ fi
 
 # Check if git is installed
 if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ];
-  then
-    read -p "You need git installed to run this script. Do you want to install it? $GREEN(y)Yes$RESTORE/$RED(n)No$RESTORE " yn;
-    case $yn in
-    [yY][eE][sS]|[yY]) echo $GREEN"Installing git"$RESTORE; sleep 2; sudo $packageManager git;;
-    [nN][oO]|[nN]) echo $RED"Aborting..."$RESTORE; exit 1 ;;
-    *) exit ;;
-    esac
-fi
+    then
+        read -p "You need git installed to run this script. Do you want to install it? $GREEN(y)Yes$RESTORE/$RED(n)No$RESTORE " yn;
+        case $yn in
+        [yY][eE][sS]|[yY]) echo $GREEN"Installing git"$RESTORE; sleep 2; sudo $packageManager git;;
+        [nN][oO]|[nN]) echo $RED"Aborting..."$RESTORE; exit 1 ;;
+        *) exit ;;
+        esac
+    fi
 
 echo $GREEN"Installing zsh"$RESTORE
-sudo apt install zsh -y
+sudo $packageManager zsh -y
 echo $GREEN"zsh is now installed"$RESTORE
 sleep 2
 
