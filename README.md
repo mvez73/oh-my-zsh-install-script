@@ -1,6 +1,6 @@
 # zsh, oh my zsh and powerlevel10k install script
 This script will install zsh, oh my zsh + the plugins you choose and the theme powerlevel10k.
-It will also detect your Linux distro to use the correct package manager to install git if necessary. Fastfetch can be install if you have Debian/Ubuntu. (More distro to come)
+It will also detect your Linux distro to use the correct package manager to install git if necessary. Fastfetch can be install if you have Debian/Ubuntu.
 
 ## How to install
 
